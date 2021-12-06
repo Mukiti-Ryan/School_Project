@@ -19,7 +19,7 @@ if(isset($_POST['submit'])) {
     $gender = $_POST['gender'];
 
     if($password == $repassword) {
-        $sql = "SELECT * FROM user_info WHERE email='$email' AND password='$password'";
+        $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
         $result = mysqli_query($conn, $sql);
         if (!$result->num_rows > 0) {
             $sql = "INSERT INTO user_info (firstname, lastname, username, email, password, gender) VALUES ('$firstname','$lastname','$username','$email','$password', '$gender')";
