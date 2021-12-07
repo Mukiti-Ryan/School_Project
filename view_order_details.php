@@ -1,5 +1,5 @@
 <?php
-include('session_m.php');
+include('managersession.php');
 if(!isset($login_session)) {
     header('Location: managerlogin.php');
 }
