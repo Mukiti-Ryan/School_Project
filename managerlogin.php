@@ -13,7 +13,7 @@ if(isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+    $sql = "SELECT * FROM admin WHERE email='$email' AND password='$password'";
     $result = mysqli_query($conn, $sql);
     if($result->num_rows > 0) {
         $row = mysqli_fetch_assoc($result);
@@ -39,7 +39,7 @@ if(isset($_POST['submit'])) {
 <body>
     <div class="container">
         <form action="" method="POST" class="login-email">
-            <p class="login-text" style="font-size: 2rem; font-weight: 800;">Login</p>
+            <p class="login-text" style="font-size: 2rem; font-weight: 800;">Manager's Login</p>
             <div class="input-group">
                 <input type="email" placeholder="Email" name="email" value="<?php echo $email; ?>" required>
             </div>
@@ -49,7 +49,7 @@ if(isset($_POST['submit'])) {
             <div class="input-group">
                 <button name="submit" class="btn">Login</button>
             </div>
-            <p class="login-register-text">Don't have an account? <a href="register.php">Register Here</a>.</p>
+            <p class="login-register-text">Don't have an account? <a href="managerregister.php">Register Here</a>.</p>
         </form>
     </div>
 </body>
