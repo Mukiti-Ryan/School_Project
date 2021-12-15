@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +17,7 @@
 </head>
 
 <body>
+    <!---------------- Header ------------------->
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -21,29 +26,26 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.php">Home</a></li>
                         <li><a href="product.php">Products</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
-                        <li><a href="">Account</a></li>
-                        <img src="images/cart.png" width="30px" height="30px">
+                        <li><a href="aboutus.php">About</a></li>
+                        <li><a href="contactus.php">Contact</a></li>
                         <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
-                    </ul>
-                </nav>
-            </div>
-            <?php
+                        <?php
                 if(isset($_SESSION['login-user1'])) {
 
             ?>
-            <ul class="nav navbar-nav navbar-right">
+            <br>
+            <ul id="MenuItems">
                 <li><a href="#">Welcome <?php echo $_SESSION['login-user1']; ?></a></li>
                 <li><a href="">MANAGER CONTROL PANEL</a></li>
                 <li><a href="managerlogout.php">Log Out</a></li>
             </ul>
+            </div>
             <?php
                 } else if(isset($_SESSION['login-user2'])) {
                     ?>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="col-2">
                     <li><a href="#">Welcome <?php echo $_SESSION['login-user2']; ?></a></li>
                     <li><a href="product.php">Products</a></li>
                     <li><a href="cart.php">Cart
@@ -62,23 +64,17 @@
                 else {
                     ?>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign Up</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="customerregister.php">User Register</a></li>
-                                <li><a href="managerregister.php">Manager Register</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="customerlogin.php">User Login</a></li>
-                                <li><a href="managerlogin.php">Manager Login</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="customerregister.php">User Register</a></li>
+                        <li><a href="managerregister.php">Manager Register</a></li>
+                        <li><a href="customerlogin.php">User Login</a></li>
+                        <li><a href="managerlogin.php">Manager Login</a></li>
                     </ul>
                     <?php
                 }
                 ?>
+                    </ul>
+                </nav>
+            </div>
             <!------------- Beginning---------------->
             <div class="row">
                 <div class="col-2">
@@ -99,29 +95,34 @@
     <div class="categories">
         <div class="small-container">
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <img src="images/category1.jpg">
+                    <button class="category-btn">Men's Clothing</button>
                 </div>
-                <div class=" col-3 ">
-                    <img src="images/category2.jpg ">
+                <div class=" col-4">
+                    <img src="images/category2.jpg">
+                    <button class="category-btn">Women's Clothing</button>
                 </div>
-                <div class="col-3 ">
-                    <img src="images/category3.jpg ">
+                <div class="col-4">
+                    <img src="images/category3.jpg">
+                    <button class="category-btn">Children's Clothing</button>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <img src="images/category4.jpg">
+                    <button class="categoru-btn">Pet's Clothing</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!------------- featured products ----------------->
+
     <div class="small-container">
         <h2 class="feature">Featured Products</h2>
         <div class="row">
             <div class="col-4">
                 <img src="images/prod1.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Official White Shirt.<br>Official Brown Leather Shoes.</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -134,7 +135,7 @@
             </div>
             <div class="col-4">
                 <img src="images/prod2.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>White Top<br> Brown High Heels.</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -147,7 +148,7 @@
             </div>
             <div class="col-4">
                 <img src="images/prod3.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Matching Boy and Girl Outfit</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -160,7 +161,7 @@
             </div>
             <div class="col-4">
                 <img src="images/prod4.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Red Chihuahua Pullneck </h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -176,7 +177,7 @@
         <div class="row">
             <div class="col-4">
                 <img src="images/prod5.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Green Nike Air-Jordan HighTop</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -189,7 +190,7 @@
             </div>
             <div class="col-4">
                 <img src="images/prod6.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Adidas Sports Track</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -202,7 +203,7 @@
             </div>
             <div class="col-4">
                 <img src="images/prod7.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Official Red Stilletos</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -215,7 +216,7 @@
             </div>
             <div class="col-4">
                 <img src="images/prod8.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Official White Stilletos</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -233,7 +234,7 @@
         <div class="row">
             <div class="col-4">
                 <img src="images/latest1.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Red Nike Air-Jordan HighTop</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -246,7 +247,7 @@
             </div>
             <div class="col-4">
                 <img src="images/latest2.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Official Beige Stilletos</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -259,7 +260,7 @@
             </div>
             <div class="col-4">
                 <img src="images/latest3.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Brown Sneakers</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -272,7 +273,7 @@
             </div>
             <div class="col-4">
                 <img src="images/latest4.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Limited Edition Nike B2B HighTop</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -285,7 +286,7 @@
             </div>
             <div class="col-4">
                 <img src="images/latest5.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Brown Kids Shoes</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -298,7 +299,7 @@
             </div>
             <div class="col-4">
                 <img src="images/latest6.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>EastPak LockDown Sandals</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -311,7 +312,7 @@
             </div>
             <div class="col-4">
                 <img src="images/latest7.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Yellow Converse</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
@@ -324,7 +325,7 @@
             </div>
             <div class="col-4">
                 <img src="images/latest8.jpg">
-                <h4>Red Printed T-shirt</h4>
+                <h4>Family set of Shoes</h4>
                 <div class="rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>

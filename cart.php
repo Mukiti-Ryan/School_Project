@@ -1,13 +1,10 @@
 <?php
-session_start();
-require 'config.php';
-$conn = Connect();
+    session_start();
+    require 'config.php';
+    error_reporting(0);
 
-if(isset($_SESSION['login_user2'])) {
-    header("location: customerlogin.php");
-}
+
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,10 +16,11 @@ if(isset($_SESSION['login_user2'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
-    <title>Shooping Cart Page</title>
+    <title>Shopping Cart | StyleSensed</title> 
 </head>
-
 <body>
+
+<!---------------- Header ------------------->
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -31,111 +29,153 @@ if(isset($_SESSION['login_user2'])) {
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Products</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
-                        <li><a href="">Account</a></li>
-                        <img src="images/cart.png" width="30px" height="30px">
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="product.php">Products</a></li>
+                        <li><a href="aboutus.php">About</a></li>
+                        <li><a href="contactus.php">Contact</a></li>
                         <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
-                    </ul>
-                </nav>
+                        <?php
+                            if(isset($_SESSION['login-user1'])) {
+                        ?>
+                        <br>
+                        <ul id="MenuItems">
+                            <li><a href="#">Welcome <?php echo $_SESSION['login-user1']; ?></a></li>
+                            <li><a href="">MANAGER CONTROL PANEL</a></li>
+                            <li><a href="managerlogout.php">Log Out</a></li>
+                        </ul>
             </div>
+            <?php
+                } else if(isset($_SESSION['login-user2'])) {
+            ?>
+            <ul class="col-2">
+                <li><a href="#">Welcome <?php echo $_SESSION['login-user2']; ?></a></li>
+                <li><a href="product.php">Products</a></li>
+                <li><a href="cart.php">Cart
+                (<?php
+                    if(isset($_SESSION["cart"])){
+                    $count = count($_SESSION["cart"]);
+                    echo "$count";
+                } else 
+                    echo "0";
+                    ?>) 
+                </a></li>
+                <li><a href="userlogout.php">Log out</a></li>
+            </ul>
+            <?php
+                }
+                else {
+            ?>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="customerregister.php">User Register</a></li>
+                <li><a href="managerregister.php">Manager Register</a></li>
+                <li><a href="customerlogin.php">User Login</a></li>
+                <li><a href="managerlogin.php">Manager Login</a></li>
+            </ul>
+            <?php
+                }
+            ?>
+            </ul>
+            </nav>
         </div>
     </div>
-    <!------------ Cart Items Details--------------->
-    <div class="small-container cart-page">
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-            </tr>
-            <tr>
-                <td>
-                    <div class="cart-info">
-                        <img src="images/latest1.jpg">
-                        <div>
-                            <p>Red Printed T-Shirt</p>
-                            <small>Price: $50.00</small>
-                            <br>
-                            <a href="">Remove</a>
-                        </div>
-                </td>
-                <td><input type="number" value="1"></td>
-                <td>$50.00</td>
-            </tr>
-        </table>
-        <div class="total-price">
-            <table>
-                <tr>
-                    <td>Subtotal</td>
-                    <td>$200.00</td>
-                </tr>
-                <tr>
-                    <td>Tax</td>
-                    <td>$30.00</td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>$230.00</td>
-                </tr>
-            </table>
-        </div>
-        </div>
-        <!------------- Footer ----------------->
-        <div class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col-1">
-                        <h3>Download Our App Today</h3>
-                        <p>Download App for Android and IOS mobile phone.</p>
-                        <div class="app-logo">
-                            <img src="images/app-store.png">
-                            <img src="images/play-store.png">
-                        </div>
-                    </div>
-                    <div class="footer-col-2">
-                        <img src="images/logo.png">
-                        <p>Our Purpose Is To Ensure Our Customers Enjoy Our Quality Fabrics At The Best Price Possible.</p>
-                    </div>
-                    <div class="footer-col-3">
-                        <h3>Useful Links</h3>
-                        <ul>
-                            <li>Coupons</li>
-                            <li>Blog Post</li>
-                            <li>Return Policy</li>
-                            <li>Join Affiliate</li>
-                        </ul>
-                    </div>
-                    <div class="footer-col-3">
-                        <h3>Follow us</h3>
-                        <ul>
-                            <li>Facebook</li>
-                            <li>Twitter</li>
-                            <li>Instagram</li>
-                            <li>Youtube</li>
-                        </ul>
-                    </div>
+    </div>
+
+    <!----------- Cart Code ---------------->
+
+    <form method="POST" action="update_cart1.php">
+        <div class="order">
+            <div class="row">
+                <div class="col-1">
+                        <h2 class="text-center">Items Selected</h2>
+                        <?php
+
+                        $total = 0;
+
+                        $output = "";
+
+                        $output .= "
+                            <table class='table table-bordered table-striped'>
+                                <tr>
+                                    <th> ID </th>
+                                    <th> Item Name </th>
+                                    <th> Item Price </th>
+                                    <th> Item Quantity </th>
+                                    <th> Item Image </th>
+                                    <th> Total Price </th>
+                                    <th> Action </th>
+                                </tr>
+                        ";
+
+                        if(!empty($_SESSION['cart'])) {
+                            foreach ($_SESSION['cart'] as $keys => $value) {
+                                $output .= "
+                                    <tr>
+                                        <td>".$value['product_id']."</td>
+                                        <td>".$value['product_name']."</td>
+                                        <td>".$value['unit_price']."</td>
+                                        <td>".$value['product_quantity']."</td>
+                                        <td>".number_format($value['unit_price'] * $value['product_quantity'],2)."</td>
+                                        <td>".$value['product_image']."</td>
+                                        <td>
+                                            <a href='cart.php?action=remove&id=".$value['id']."'>
+                                                <button class='btn btn-danger btn-block'>Remove</button>
+                                            </a>
+                                        </td>
+                                ";
+
+                                $total = $total + $values['product_quantity'] * $value['price'];
+                            }
+
+                            $output .="
+                            <tr>
+                                <td colspan='3'></td>
+                                <td></b>Total Price</b></td>
+                                <td>".number_format($total,2)."</td>
+                                <td>
+                                    <a href='cart.php?action=clearall'>
+                                        <button class='btn btn-warning btn-block'>Clear</button>
+                                    </a>
+                                </td>
+                            <tr>
+                            ";
+
+                            $output .="
+                            <tr>
+                                <td colspan='1'</td>
+                                <td>
+                                    <a href='payment.php?action=checkout'>
+                                        <button class='btn btn-warning btn-block'>Check Out</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            ";
+                        }
+                        
+                        echo $output;
+                        ?>
                 </div>
-                <hr>
-                <p class="copyright">Copyright 2021 - Flex Technologies</p>
             </div>
         </div>
-        <!---------------js for toggle menu--------------->
-        <script>
-            var MenuItems = document.getElementById("MenuItems");
 
-            MenuItems.style.maxHeight = "0px";
+        <?php
+        
+            if(isset($_GET['action'])) {
 
-            function menutoggle() {
-                if (MenuItems.style.maxHeight == "0px") {
-                    MenuItems.style.maxHeight = "200px";
-                } else {
-                    MenuItems.style.maxHeight = "0px";
+                if($_GET['action'] == "clearall") {
+
+                    unset($_SESSION['cart']);
+                }
+                
+                if($_GET['action'] == "remove") {
+                    foreach($_SESSION['cart'] as $key => $value) {
+                        if($valve['id'] == $_GET['id']) {
+                            unset($_SESSION['cart'][$key]);
+                        }
+                    } 
                 }
             }
-        </script>
+        
+        ?>
+    </form>
 </body>
-
 </html>

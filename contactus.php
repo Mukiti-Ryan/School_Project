@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +18,6 @@ session_start();
 </head>
 
 <body>
-    <!---------------- Header ------------------->
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -36,12 +36,43 @@ session_start();
             </div>
         </div>
     </div>
-
-    <!------------- Wallet System ---------------->
-
-
-
-    
+    <!------------ Contact Page ------------->
+    <div class="contact">
+        <div class="container">
+            <div class="contact-col-2">
+                <strong>Want To Contact <span class="edit">StyleSensed</span>?</strong>
+                <br>
+                Here are a few ways to get in touch with us.
+            </div>
+                <div class="row"></div>
+                    <div class="contact-col-2">
+                        <form action="" method="POST">
+                            <p class="login-text" style="font-size: 2rem; font-weight: 800;">Contact Form</p>
+                            <div class="input-group">
+                                <input type="text" placeholder="Your Name" name="name" value="<?php echo $name; ?>" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" placeholder="Your Email Address" name="email" value="<?php echo $email; ?>" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="number" placeholder="Your Mobile Number" name="mobile" value="<?php echo $mobile; ?>" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="The Subject" name="subject" value="<?php echo $subject; ?>" required>
+                            </div>
+                            <div class="input-group">
+                                <br>
+                                <textarea type="textarea" id="message" name="message" placeholder="Your Message" maxlength="500" rows="7"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <button name="submit" class="btn"><a href="index.php">Submit</a></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-------------- Footer ----------------->
     <div class="footer">
         <div class="container">
@@ -68,7 +99,7 @@ session_start();
                     </ul>
                 </div>
                 <div class="footer-col-3">
-                    <h3>Follow us</h3>
+                    <h3>Follow us on</h3>
                     <ul>
                         <li>Facebook</li>
                         <li>Twitter</li>
@@ -95,6 +126,27 @@ session_start();
             }
         }
     </script>
+    <?php
+        if(isset($_POST['submit'])) {
+            require 'config.php';
+            $conn = Connect();
+
+            $Name = $conn->real_escape_string($_POST['name']);
+            $email_id = $conn->real_escape_string($_POST['email']);
+            $Mobile_No = $conn->real_escape_string($_POST['mobile']);
+            $Subject = $conn->real_escape_string($_POST['subject']);
+            $Message = $conn->real_escape_string($_POST['message']);
+
+            $query = "INSERT into contact(Name, Email, Mobile, Subject, Message) VALUES ('$name','$email','$mobile','$subject','$message')";
+            $success = $conn->query($query);
+
+            if (!$success) {
+                die("Couldn't enter Data: ".$conn->error);
+            }
+
+            $conn->close();
+        }
+    ?>
 </body>
 
 </html>

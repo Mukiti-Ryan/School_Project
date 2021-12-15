@@ -8,7 +8,7 @@ if(isset($_POST['submit'])) {
         $error = "Email or Password is Invalid";
     } else {
         //Define $email and $password
-        $username = $_POST['email'];
+        $email = $_POST['email'];
         $password = $_POST['password'];
         require 'config.php';
         $conn = Connect();

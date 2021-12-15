@@ -4,7 +4,7 @@ function Connect() {
 $server = "localhost";
 $user = "root";
 $pass = "";
-$database = "school";
+$database = "final";
 
 //Create Connection
 $conn = mysqli_connect($server, $user, $pass, $database) or die($conn->connect_error);

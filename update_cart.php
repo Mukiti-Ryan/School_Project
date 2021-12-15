@@ -6,24 +6,24 @@ if(!isset($_SESSION)) {
 include 'config.php';
 $conn = Connect();
 
-$F_ID = $_GET['id'];
+$product_id = $_GET['id'];
 $action = $_GET['action'];
 
-$sql = "SELECT quantity FROM /*---*/ WHERE F-id = ".$F_ID;
+$sql = "SELECT quantity FROM /*---*/ WHERE product_id = ".$product_id;
 $result = mysqli_query($conn, $sql);
 
 if($result) {
     if($obj = mysqli_fetch_assoc($result)) {
         switch($action) {
             case "add":
-            if($_SESSION['cart'][$F_ID]+1 <= $row["quantity"])
-            $_SESSION['cart'][$F_ID]++;
+            if($_SESSION['cart'][$product_id]+1 <= $row["quantity"])
+            $_SESSION['cart'][$product_id]++;
             break;
 
             case "remove":
-                $_SESSION['cart'][$F_ID]--;
-                if($_SESSION['cart'][$F_ID] == 0)
-                unset($_SESSION['cart'][$F_ID]);
+                $_SESSION['cart'][$product_id]--;
+                if($_SESSION['cart'][$product_id] == 0)
+                unset($_SESSION['cart'][$product_id]);
                 break;
         }
     }

@@ -6,7 +6,7 @@ error_reporting(0);
 session_start();
 
 if(isset($_SESSION['username'])) {
-    header("location: login.php");
+    header("location: customerlogin.php");
 }
 
 if(isset($_POST['submit'])) {
@@ -17,12 +17,13 @@ if(isset($_POST['submit'])) {
     $password = md5($_POST['password']);
     $repassword = md5($_POST['repassword']);
     $gender = $_POST['gender'];
+    $roles = $_POST['roles'];
 
     if($password == $repassword) {
         $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
         $result = mysqli_query($conn, $sql);
         if (!$result->num_rows > 0) {
-            $sql = "INSERT INTO user_info (firstname, lastname, username, email, password, gender) VALUES ('$firstname','$lastname','$username','$email','$password', '$gender')";
+            $sql = "INSERT INTO users (firstname, lastname, username, email, password, gender, role) VALUES ('$firstname','$lastname','$username','$email','$password', '$gender', '$role')";
             $result = mysqli_query($conn, $sql);
             if($result) {
                 echo "<script>alert('Wow! User Registration Successful.')</script>";
@@ -33,6 +34,7 @@ if(isset($_POST['submit'])) {
                 $_POST['password'] = "";
                 $_POST['repassword'] = "";
                 $gender = "";
+                $roles = "";
             }else {
                 echo "<script>alert('Wooops! Something Went Wrong.')</script>";
             }
@@ -53,13 +55,13 @@ if(isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Register</title>
+    <title>Customer Registration</title>
 </head>
 
 <body>
     <div class="container">
         <form action="" method="POST" class="login-email">
-            <p class="login-text" style="font-size: 2rem; font-weight: 800;">Register</p>
+            <p class="login-text" style="font-size: 2rem; font-weight: 800;">Customer Register</p>
             <div class="input-group">
                 <input type="text" placeholder="First Name" name="firstname" value="<?php echo $firstname; ?>" required>
             </div>
@@ -79,8 +81,7 @@ if(isset($_POST['submit'])) {
                 <input type="password" placeholder="Confirm Password" name="repassword" value="<?php echo $_POST['$repassword']; ?>" required>
             </div>
             <div class="input-group">
-                <label for="gender">Select your Gender</label>
-                <select name="gender" value="<?php echo $gender; ?>">
+                <select name="gender" class="form-control" value="<?php echo $gender; ?>">
                     <option value="none" selected>Gender</option>
                     <option value="male" id="1">Male</option>
                     <option value="female" id="2">Female</option>
@@ -88,7 +89,14 @@ if(isset($_POST['submit'])) {
                 </select>
             </div>
             <div class="input-group">
-                <button name="submit" class="btn">Register</button>
+                <select class="form-control" name="roles" value="<?php echo $roles; ?>">
+                    <option value="" selected="selected"> Select Role </option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <button name="submit" class="btn"><a href="index.php">Register</a></button>
             </div>
             <p class="login-register-text">Already a member? <a href="customerlogin.php">Login Here</a>.</p>
         </form>
